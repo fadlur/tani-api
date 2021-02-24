@@ -22,5 +22,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function() {
     // manggil controller sesuai bawaan laravel 8
     Route::post('logout', [AuthController::class, 'logout']);
     // manggil controller dengan mengubah namespace di RouteServiceProvider.php biar bisa kayak versi2 sebelumnya
-    Route::post('logoutall', 'AuthController@logoutall');
+    // Route::post('logoutall', 'AuthController@logoutall');
 });
+
