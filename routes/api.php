@@ -38,3 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin,
     Route::resource('produk', 'ProdukController');
 });
 
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin,pembeli']], function() {
+    Route::resource('pembeliandetail', 'PembelianDetailController');
+    Route::resource('pembelian', 'PembelianController');
+});
