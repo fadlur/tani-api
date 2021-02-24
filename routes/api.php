@@ -34,3 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin'
     Route::get('user/{id}', 'UserController@show');
 });
 
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin,mitra']], function() {
+    Route::resource('produk', 'ProdukController');
+});
+
