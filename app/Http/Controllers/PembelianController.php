@@ -113,7 +113,15 @@ class PembelianController extends Controller
      */
     public function show($id)
     {
-        
+        // $itemuser = $request->user();
+        $itempembelian = Pembelian::findOrFail($id);
+        $respon = [
+            'status' => 'success',
+            'msg' => 'Data berhasil ditemukan',
+            'content'=> new PembelianResource($itempembelian),
+            'errors' => null
+        ];
+        return response()->json($respon, 200);
     }
 
     /**
@@ -125,7 +133,30 @@ class PembelianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        // hanya proses update status menjadi checkout
+        $itemuser = $request->user();
+        $itempembelian = Pembelian::where('status', 'cart')
+                                ->where('id', $id)
+                                ->where('user_pembeli', $itemuser->id)
+                                ->first();
+        if ($itempembelian) {
+            $itempembelian->update(['status' => 'checkout']);
+            $itempembelian->refresh();
+            $respon = [
+                'status' => 'success',
+                'msg' => 'Data berhasil ditemukan',
+                'content'=> new PembelianResource($itempembelian),
+                'errors' => null
+            ];
+            return response()->json($respon, 200);
+        }
+        $respon = [
+            'status' => 'error',
+            'msg' => 'Data tidak ditemukan',
+            'content'=> null,
+            'errors' => null
+        ];
+        return response()->json($respon, 200);
     }
 
     /**
