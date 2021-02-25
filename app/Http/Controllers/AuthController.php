@@ -52,7 +52,7 @@ class AuthController extends Controller
                     'token_type' => 'Bearer',
                 ]
             ];
-            return response()->json($respon, 401);
+            return response()->json($respon, 200);
         }
     }
 
